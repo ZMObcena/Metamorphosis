@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 534d50180161769489ca248abc09ec36
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8574412962073106934
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 268238
+  packageName: Pack Tree
+  packageVersion: 1.0
+  assetPath: Assets/Stylized Forest/Materials/L_Dirt.terrainlayer
+  uploadId: 620921

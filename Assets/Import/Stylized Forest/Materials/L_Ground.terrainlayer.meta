@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c3fdaf6eadded4f4ab67f51d9e78679b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8574412962073106934
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 268238
+  packageName: Pack Tree
+  packageVersion: 1.0
+  assetPath: Assets/Stylized Forest/Materials/L_Ground.terrainlayer
+  uploadId: 620921
