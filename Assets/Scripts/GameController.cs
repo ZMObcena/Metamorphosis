@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     {
         EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_GAME_OVER, this.GameOver);
         EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_ADD_POINTS, this.UpdatePoints);
+        EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_WIN, this.PlayerWin);
 
         this._totalPoints = 0;
     }
@@ -28,10 +29,6 @@ public class GameController : MonoBehaviour
         timeParams.PutExtra(EventNames.Jam1_Event.TIME_ELAPSED, this._elapsedTime);
         EventBroadcaster.Instance.PostEvent(EventNames.Jam1_Event.ON_UPDATE_TIME, timeParams);
     }
-    private void GameOver()
-    {
-        Debug.Log("GameOver");
-    }
 
     private void UpdatePoints(Parameters param)
     {
@@ -39,5 +36,20 @@ public class GameController : MonoBehaviour
         Parameters pointsParam = new Parameters();
         pointsParam.PutExtra(EventNames.Jam1_Event.TOTAL_POINTS, this._totalPoints);
         EventBroadcaster.Instance.PostEvent(EventNames.Jam1_Event.ON_UPDATE_POINTS, pointsParam);
+        if(this._totalPoints >= 50)
+        {
+            EventBroadcaster.Instance.PostEvent(EventNames.Jam1_Event.ON_WIN);
+        }
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("GameOver");
+    }
+
+    private void PlayerWin()
+    {
+        Debug.Log("Player Win");
+        this._totalPoints = 0;
     }
 }

@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rb;
     private bool _isGrounded;
     private bool _isJumping;
+    private bool _isGameOver;
 
     private void Start()
     {
@@ -22,11 +23,18 @@ public class PlayerMovement : MonoBehaviour
         this._rb = GetComponent<Rigidbody>();
         this._isGrounded = true;
         this._isJumping = false;
+        this._isGameOver = false;
+    }
+
+    private void OnDestroy()
+    {
+        EventBroadcaster.Instance.RemoveObserver(EventNames.Jam1_Event.ON_GAME_OVER);
+        EventBroadcaster.Instance.RemoveObserver(EventNames.Jam1_Event.ON_PLAYER_FALL);
     }
 
     private void Update()
     {
-        if(!this._isJumping)
+        if(!this._isGameOver)
         {
             StickToTreeSurface();
         }
@@ -83,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
     {
         StartCoroutine(Jump());
     }
+
     IEnumerator Jump()
     {
         this._isJumping = true;
@@ -120,8 +129,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void StopMovement()
     {
+        Debug.Log("stop movement");
         this._isJumping = true;
-        this._rb.useGravity = true;
+        this._isGameOver = true;
     }
 }
 

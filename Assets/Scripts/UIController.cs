@@ -10,15 +10,20 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _timeText;
     [SerializeField] private TMP_Text _pointsText;
+    [SerializeField] private GameObject _gameoverScreen;
+    [SerializeField] private Button _replayButton;
+    [SerializeField] private Button _mainmenuButton;
 
     private bool _isGameOver;
     void Start()
     {
         EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_START, this.UpdateTime);
-        EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_GAME_OVER, this.ResetTime);
-        EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_GAME_OVER, this.ResetPoints);
+        EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_GAME_OVER, this.GameOver);
         EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_UPDATE_TIME, this.UpdateTime);
         EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_UPDATE_POINTS, this.UpdatePoints);
+
+        this._replayButton.onClick.AddListener(this.OnReplayButtonClicked);
+        this._mainmenuButton.onClick.AddListener(this.OnMainMenuButtonClicked);
     }
 
     private void OnDestroy()
@@ -27,6 +32,15 @@ public class UIController : MonoBehaviour
         EventBroadcaster.Instance.RemoveObserver(EventNames.Jam1_Event.ON_GAME_OVER);
         EventBroadcaster.Instance.RemoveObserver(EventNames.Jam1_Event.ON_UPDATE_TIME);
         EventBroadcaster.Instance.RemoveObserver(EventNames.Jam1_Event.ON_UPDATE_POINTS);
+    }
+
+    private void GameOver()
+    {
+        this._isGameOver = true;
+        this._timeText.text = "00:00";
+        this._pointsText.text = "0";
+
+        this._gameoverScreen.SetActive(true);
     }
 
     private void UpdateTime(Parameters param)
@@ -38,12 +52,6 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void ResetTime()
-    {
-        this._isGameOver = true;
-        this._timeText.text = "00:00";
-    }
-
     private void UpdatePoints(Parameters param)
     {
         if(!this._isGameOver)
@@ -53,9 +61,13 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void ResetPoints(Parameters param)
+    private void OnReplayButtonClicked()
     {
-        this._isGameOver = true;
-        this._pointsText.text = "0";
+        SceneManager.LoadScene("GameScene");
+    }
+
+    private void OnMainMenuButtonClicked()
+    {
+        SceneManager.LoadScene("MainMenuScene");
     }
 }

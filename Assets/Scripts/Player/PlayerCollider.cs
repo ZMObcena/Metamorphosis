@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerCollider : MonoBehaviour
 {
-    private Rigidbody _rb;
+    private Rigidbody _rigidbody;
+
     private void Start()
     {
-        this._rb = GetComponent<Rigidbody>();
+        this._rigidbody = this.gameObject.GetComponent<Rigidbody>();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -16,7 +17,7 @@ public class PlayerCollider : MonoBehaviour
         if(collision.collider.CompareTag("Obstacle"))
         {
             EventBroadcaster.Instance.PostEvent(EventNames.Jam1_Event.ON_GAME_OVER);
-            this._rb.useGravity = true;
+            this._rigidbody.constraints = RigidbodyConstraints.None;
         }
 
         if(collision.collider.CompareTag("Leaf"))
@@ -24,6 +25,7 @@ public class PlayerCollider : MonoBehaviour
             Debug.Log("Leaf");
             pointParams.PutExtra(EventNames.Jam1_Event.POINTS_AMOUNT, 5);
             EventBroadcaster.Instance.PostEvent(EventNames.Jam1_Event.ON_ADD_POINTS, pointParams);
+            Destroy(collision.gameObject);
         }
 
         if (collision.collider.CompareTag("GoldLeaf"))
@@ -31,6 +33,7 @@ public class PlayerCollider : MonoBehaviour
             Debug.Log("GoldLeaf");
             pointParams.PutExtra(EventNames.Jam1_Event.POINTS_AMOUNT, 10);
             EventBroadcaster.Instance.PostEvent(EventNames.Jam1_Event.ON_ADD_POINTS, pointParams);
+            Destroy(collision.gameObject);
         }
     }
 }

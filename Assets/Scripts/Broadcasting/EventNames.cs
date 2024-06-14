@@ -65,6 +65,7 @@ public class EventNames {
 		public const string POINTS_AMOUNT = "POINTS_AMOUNT";
 		public const string TOTAL_POINTS = "TOTAL_POINTS";
 
+		public const string ON_WIN = "ON_WIN";
 		public const string ON_GAME_OVER = "ON_GAME_OVER";
 		public const string ON_CATERPILLAR_PHASE = "ON_CATERPILLAR_PHASE";
 		public const string ON_BUTTERFLY_PHASE = "ON_BUTTERFLY_PHASE";
