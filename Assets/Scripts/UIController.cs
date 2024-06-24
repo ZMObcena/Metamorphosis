@@ -14,6 +14,12 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button _replayButton;
     [SerializeField] private Button _mainmenuButton;
 
+    [SerializeField] private GameObject _collectText;
+    [SerializeField] private GameObject _avoidText;
+    [SerializeField] private GameObject _movementText;
+
+    private float _time;
+
     private bool _isGameOver;
     void Start()
     {
@@ -34,6 +40,27 @@ public class UIController : MonoBehaviour
         EventBroadcaster.Instance.RemoveObserver(EventNames.Jam1_Event.ON_UPDATE_POINTS);
     }
 
+    private void Update()
+    {
+        this._time += Time.deltaTime;
+
+        if(this._time >= 1.5f)
+        {
+            this._collectText.SetActive(false);
+            this._avoidText.SetActive(true);
+        }
+
+        if(this._time >= 3f)
+        {
+            this._avoidText.SetActive(false);
+            this._movementText.SetActive(true);
+        }
+
+        if(this._time >= 5f)
+        {
+            this._movementText.SetActive(false);
+        }
+    }
     private void GameOver()
     {
         this._isGameOver = true;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameController : MonoBehaviour
         EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_ADD_POINTS, this.UpdatePoints);
         EventBroadcaster.Instance.AddObserver(EventNames.Jam1_Event.ON_WIN, this.PlayerWin);
 
+        Time.timeScale = 1;
         this._totalPoints = 0;
     }
 
@@ -44,12 +46,12 @@ public class GameController : MonoBehaviour
 
     private void GameOver()
     {
-        Debug.Log("GameOver");
+        Time.timeScale = 0;
     }
 
     private void PlayerWin()
     {
-        Debug.Log("Player Win");
         this._totalPoints = 0;
+        SceneManager.LoadScene("TransitionScene");
     }
 }
